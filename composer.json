@@ -1,0 +1,46 @@
+{
+    "name": "loghq/loghq",
+    "description": "loghq log streaming - PHP SDK",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://loghq.org",
+    "keywords": [
+        "loghq",
+        "logging",
+        "log-management",
+        "log-streaming",
+        "observability",
+        "php"
+    ],
+    "support": {
+        "issues": "https://github.com/loghqorg/loghq-php/issues",
+        "source": "https://github.com/loghqorg/loghq-php"
+    },
+    "require": {
+        "php": ">=8.4",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5 || ^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LogHQ\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LogHQ\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "version": "0.1.0"
+}

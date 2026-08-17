@@ -41,6 +41,5 @@
         "sort-packages": true
     },
     "minimum-stability": "stable",
-    "prefer-stable": true,
-    "version": "0.1.0"
+    "prefer-stable": true
 }

@@ -13,7 +13,9 @@ final class ConfigTest extends TestCase
     public function test_defaults(): void
     {
         $c = new Config(['key' => 'loghq_x']);
-        self::assertSame('https://loghq.org', $c->host);
+        // Local development default. See Config::DEFAULT_HOST - this goes back
+        // to https://loghq.org before release, and this line moves with it.
+        self::assertSame('http://127.0.0.1:3008', $c->host);
         self::assertTrue($c->enabled);
         self::assertSame(LogLevel::DEBUG, $c->minLevel);
         self::assertSame('app', $c->channel);

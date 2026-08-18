@@ -114,7 +114,7 @@ across without translation.
 | --- | --- | --- |
 | `key` | `''` | Project ingest key. **Empty disables the client silently.** |
 | `dsn` | none | `https://<key>@<host>/<project>` instead of the parts. |
-| `host` | `http://127.0.0.1:3008` | Ingest host. See the note below. |
+| `host` | `https://loghq.org` | Ingest host. Only set it to self-host. |
 | `project` | `''` | Optional. The key alone already identifies the project. |
 | `environment` | `production` | Reported on every entry. |
 | `release` | none | Version or commit, reported on every entry. |
@@ -134,16 +134,18 @@ across without translation.
 | `redactKeys` | see below | Context keys whose values are replaced. |
 
 > [!NOTE]
-> `host` defaults to `http://127.0.0.1:3008`, which is where `bun run dev` in
-> the loghq repo serves the ingest. That is deliberate and temporary: loghq is
-> not serving production ingest for these SDKs yet, so every consumer today is
-> running locally and should not have to configure an endpoint to do it.
+> Entries POST to `{host}/logs`, so the default resolves to
+> `https://loghq.org/logs`. The path comes from the ingest spec rather than from
+> this SDK, and is the same in every language client.
 >
-> It goes back to `https://loghq.org` in the release that makes production
-> ingest real. Applications should not set `host` to work around this; the point
-> of a default is that the SDK owns where entries go, and an app that pins it
-> now has to be found and unpinned later. Set it only when you genuinely
-> self-host.
+> Leave `host` alone unless you self-host. The SDK owning the endpoint is what
+> stops it being copied into every consuming application and having to be found
+> again when it changes.
+>
+> To develop against a local loghq (`bun run dev` in the loghq repo), set
+> `host` to `http://127.0.0.1:3008`. Use the IPv4 literal rather than
+> `localhost`: that server binds 127.0.0.1 only, and `localhost` can resolve to
+> `::1` first and be refused.
 
 ## What gets sent
 

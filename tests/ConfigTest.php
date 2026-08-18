@@ -13,9 +13,12 @@ final class ConfigTest extends TestCase
     public function test_defaults(): void
     {
         $c = new Config(['key' => 'loghq_x']);
-        // Local development default. See Config::DEFAULT_HOST - this goes back
-        // to https://loghq.org before release, and this line moves with it.
-        self::assertSame('http://127.0.0.1:3008', $c->host);
+        // Spelled out rather than referencing Config::DEFAULT_HOST, which is
+        // the point: a test that compares the default to itself passes against
+        // any value, including the loopback address this package briefly
+        // shipped with. That default deploys, connects to nothing, and the
+        // transport swallows it, so missing logs are the only symptom.
+        self::assertSame('https://loghq.org', $c->host);
         self::assertTrue($c->enabled);
         self::assertSame(LogLevel::DEBUG, $c->minLevel);
         self::assertSame('app', $c->channel);

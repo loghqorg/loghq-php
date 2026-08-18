@@ -19,24 +19,21 @@ final class Config
      * Where entries POST, as `DEFAULT_HOST . '/logs'`, when neither an explicit
      * `host` nor a DSN says otherwise.
      *
-     * POINTED AT LOCAL DEVELOPMENT ON PURPOSE, AND TEMPORARILY. loghq is not
-     * serving production ingest for these SDKs yet, so every consumer today is
-     * running against `bun run dev` in the loghq repo, which serves the API on
-     * 3008. An application should not have to name an endpoint to do the only
-     * thing currently possible.
+     * The path is not this SDK's to choose. `docs/ingest.md` in the loghq repo
+     * is the wire contract and specifies `POST /logs` at the app root, which
+     * `app/Routes.ts` registers with an empty prefix. Every client in every
+     * language targets that same URL.
      *
-     * The IPv4 literal rather than `localhost` is deliberate: the dev server
-     * binds 127.0.0.1 only, so on a machine where `localhost` resolves to `::1`
-     * first, the connection is refused.
+     * Self-hosters, and only they, override with an explicit `host` or a DSN.
+     * An application on hosted loghq should leave this alone: the SDK owning
+     * the endpoint is what stops a host being copied into every consumer and
+     * having to be hunted down again later.
      *
-     * This has to become `https://loghq.org` before anything is released for
-     * real, and that release needs a version bump, because a library defaulting
-     * to a loopback address fails in the worst way available: it deploys, it
-     * connects to nothing, the transport swallows the error by design, and the
-     * absence of logs is the only symptom. Self-hosters, and only they, should
-     * override with an explicit `host` or a DSN.
+     * Point it at `http://127.0.0.1:3008` to develop against `bun run dev` in
+     * the loghq repo. Use the IPv4 literal rather than `localhost` there, since
+     * that server binds 127.0.0.1 only and `localhost` may resolve to `::1`.
      */
-    public const DEFAULT_HOST = 'http://127.0.0.1:3008';
+    public const DEFAULT_HOST = 'https://loghq.org';
 
     public string $project = '';
 

@@ -20,7 +20,11 @@ use LogHQ\Transport\Transport;
  */
 final class LogHQ
 {
-    public const VERSION = '0.1.0';
+    // Reported as `sdk.version` on every ingested entry (Client.php) and in the
+    // User-Agent (Config.php). Bump it in the same commit as the release tag —
+    // it sat at 0.1.0 through v0.1.1 and v0.2.0, so every entry loghq received
+    // from this SDK claimed a version that had not shipped in a year.
+    public const VERSION = '0.2.0';
 
     private static ?Client $client = null;
 
